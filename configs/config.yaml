@@ -1,0 +1,46 @@
+# configs/config.yaml
+
+seed: 42
+
+data:
+  data_dir: "C:/work/WestTrade/SecondStep/data/datasets/dataset_ver3"
+  batch_size: 32
+  num_workers: 4
+  img_size: 224
+  augmentations:
+    horizontal_flip: 0.0
+    vertical_flip: 0.05
+    rotation: 15
+    brightness: 0.2
+    contrast: 0.2
+
+model:
+  name: "efficientnet_b1"
+  pretrained: false
+  num_classes: 4
+
+training:
+  max_epochs: 40
+  learning_rate: 0.00
+  weight_decay: 0.00001
+  optimizer: "Adam"
+  scheduler: "StepLR"
+  scheduler_step_size: 7
+  scheduler_gamma: 0.1
+  experiment_name:
+
+logger:
+  type: "TensorBoardLogger"
+  save_dir: "logs/"
+  name: "image_classification"
+
+callbacks:
+  early_stopping:
+    monitor: "val_loss"
+    patience: 5
+    mode: "min"
+  model_checkpoint:
+    monitor: "val_accuracy"
+    mode: "max"
+    save_top_k: 1
+    filename: "best-checkpoint"
